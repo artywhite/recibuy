@@ -1,7 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-function RecipesPage() {
-  return <div>RecipesPage</div>;
+function RecipesPage(props) {
+  const { myteststring } = props;
+  return (
+    <div>
+      Recipes Page
+      <div>
+        myteststring:
+        {myteststring}
+      </div>
+    </div>
+  );
 }
 
-export default RecipesPage;
+const mapStateToProps = state => ({
+  myteststring: state.recipesModule.recipes.myteststring,
+});
+
+export default connect(mapStateToProps)(RecipesPage);

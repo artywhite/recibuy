@@ -1,13 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { Provider } from 'react-redux';
+import { createBrowserHistory } from 'history';
 
+import configureStore from 'common/redux/configureStore';
 import Layout from 'common/components/Layout';
+
+const history = createBrowserHistory();
+const store = configureStore(history);
 
 function App() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Layout />
+      </ConnectedRouter>
+    </Provider>
   );
 }
 
