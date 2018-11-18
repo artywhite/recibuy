@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "es2018",
+    "paths": {
+      "src/*": [".src/*"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}

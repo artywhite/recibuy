@@ -1,0 +1,36 @@
+.header-wrapper {
+  height: 45px;
+  background-color: $header-bg-color;
+  display: flex;
+  align-items: center;
+
+  ul,
+  li,
+  a {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+
+  li {
+    margin: 0 20px;
+    padding: 0 20px;
+  }
+
+  li:first-child {
+    margin-left: 0;
+  }
+
+  li:last-child {
+    margin-right: 0;
+  }
+
+  li:hover {
+    background-color: lighten($header-bg-color, 10%);
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+}
