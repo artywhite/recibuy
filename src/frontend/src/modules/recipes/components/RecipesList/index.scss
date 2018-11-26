@@ -1,0 +1,17 @@
+.recipes-list-wrapper {
+  .rlw-item {
+    margin: 10px 0;
+  }
+
+  .rlwiw-item {
+    padding-left: 10px;
+
+    .rlwiwi-amount {
+      font-size: 0.9em;
+    }
+
+    .rlwiwi-unit {
+      font-size: 0.8em;
+    }
+  }
+}

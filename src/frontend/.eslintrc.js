@@ -30,5 +30,6 @@ module.exports = {
     quotes: [2, 'single'],
     'no-var': 'error',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/destructuring-assignment': [0, 'always'],
   },
 };

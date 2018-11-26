@@ -1,0 +1,14 @@
+$default-margin: 5px;
+
+.text-muted {
+  color: #949494;
+}
+
+.mlr {
+  margin-left: $default-margin;
+  margin-right: $default-margin;
+}
+
+.mr {
+  margin-right: $default-margin;
+}
