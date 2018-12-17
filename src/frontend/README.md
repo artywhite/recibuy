@@ -2,7 +2,7 @@
 
 ## TODO MVP:
 
-- add https://react-select.com/creatable
+- basket feature
 
 ## TODO After MVP:
 

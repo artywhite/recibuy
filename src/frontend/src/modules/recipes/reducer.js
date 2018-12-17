@@ -1,4 +1,9 @@
-import { ADD_RECIPE_START, ADD_RECIPE_SUCCESS, UPDATE_RECIPE_SUCCESS } from './actions';
+import {
+  ADD_RECIPE_START,
+  ADD_RECIPE_SUCCESS,
+  UPDATE_RECIPE_SUCCESS,
+  FETCH_RECIPES_SUCCESS,
+} from './actions';
 
 const tempRecipe = {
   id: 'newRecipe42',
@@ -32,7 +37,7 @@ const tempRecipe = {
 };
 
 const defaultState = {
-  recipes: [tempRecipe],
+  recipes: [],
   isInLoading: false,
   counter: 0,
 
@@ -50,6 +55,9 @@ const recipesReducer = (state = defaultState, action) => {
         isRecipeIsInProgress: false,
         recipes: [...state.recipes, action.data.recipe],
       };
+
+    case FETCH_RECIPES_SUCCESS:
+      return { ...state, recipes: action.data.recipes };
 
     case UPDATE_RECIPE_SUCCESS:
       return {

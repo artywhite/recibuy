@@ -1,7 +1,7 @@
-export const convertListToMap = list => list.reduce(
+export const convertListToMap = (list, idKey = 'id') => list.reduce(
   (result, item) => ({
     ...result,
-    [item.id]: { ...item },
+    [item[idKey]]: { ...item },
   }),
   {},
 );

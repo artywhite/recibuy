@@ -3,18 +3,17 @@ import get from 'lodash/get';
 import compact from 'lodash/compact';
 import includes from 'lodash/includes';
 
-import { unitsIdsMap, ingredientsOptions, unitsOptions } from 'modules/recipes/selectors';
 import IngredientItem from './Item';
 
 import './index.scss';
 
 class IngredientsList extends React.Component {
   getAvailableIngredients = () => {
-    const { recipeIngredients } = this.props;
+    const { recipeIngredients, ingredients } = this.props;
     const usedIds = compact(
       recipeIngredients.map(item => get(item, 'ingredientData.ingredientId')),
     );
-    return ingredientsOptions.filter(item => !includes(usedIds, item.ingredientId));
+    return ingredients.filter(item => !includes(usedIds, item.ingredientId));
   };
 
   updateListItem = (itemId, itemData) => {
@@ -50,7 +49,7 @@ class IngredientsList extends React.Component {
   };
 
   render() {
-    const { recipeIngredients } = this.props;
+    const { recipeIngredients, units, unitsMap } = this.props;
     const options = this.getAvailableIngredients();
 
     return (
@@ -65,8 +64,8 @@ class IngredientsList extends React.Component {
               onRemoveItem={this.onRemoveItem}
               onChangeUnit={this.onChangeUnit}
               onAmountChange={this.onAmountChange}
-              unitsIdsMap={unitsIdsMap}
-              unitsOptions={unitsOptions}
+              unitsMap={unitsMap}
+              unitsOptions={units}
               isLast={index === recipeIngredients.length - 1}
             />
           ))}

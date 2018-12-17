@@ -10,6 +10,10 @@ import {
   getRecipesIdsMap,
   getConvertedFromApiRecipeData,
 } from 'modules/recipes/selectors';
+
+import { getIngredients, getIngredientsMap } from 'modules/ingredients/selectors';
+import { getUnits, getUnitsMap } from 'modules/units/selectors';
+
 import { addRecipe, updateRecipe } from 'modules/recipes/actions';
 
 import IngredientList from './IngredientsList';
@@ -24,17 +28,17 @@ class RecipeForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const { recipeId, recipesIdsMap } = props;
+    const { recipeId, recipesIdsMap, ingredients, unitsMap } = props;
     const existRecipe = recipesIdsMap[recipeId];
 
-    const ingredients = existRecipe ? getConvertedFromApiRecipeData(existRecipe).ingredients : [];
+    const recipeIngredients = existRecipe ? getConvertedFromApiRecipeData(existRecipe, ingredients, unitsMap).ingredients : [];
     const name = get(existRecipe, 'name', '');
     const id = get(existRecipe, 'id');
 
     this.state = {
       id,
       name,
-      recipeIngredients: ingredients,
+      recipeIngredients,
     };
   }
 
@@ -75,6 +79,7 @@ class RecipeForm extends React.Component {
   render() {
     const nameId = uniqueId('name');
     const { name, recipeIngredients } = this.state;
+    const { ingredients, units, ingredientsMap, unitsMap } = this.props;
     return (
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
@@ -85,6 +90,10 @@ class RecipeForm extends React.Component {
         <div className="form-group">
           <label htmlFor="">Ingredients list</label>
           <IngredientList
+            ingredients={ingredients}
+            units={units}
+            ingredientsMap={ingredientsMap}
+            unitsMap={unitsMap}
             addIngredient={this.addIngredient}
             recipeIngredients={recipeIngredients}
             onChange={this.onIngredientsRecipesChange}
@@ -103,6 +112,10 @@ const reduxActions = { addRecipe, updateRecipe };
 
 const mapStateToProps = state => ({
   recipesIdsMap: getRecipesIdsMap(state),
+  ingredients: getIngredients(state),
+  units: getUnits(state),
+  ingredientsMap: getIngredientsMap(state),
+  unitsMap: getUnitsMap(state),
 });
 
 const mapDispatchToProps = dispatch => ({

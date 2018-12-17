@@ -12,7 +12,7 @@ function RecipePage(props) {
   } = props;
   return (
     <div>
-      <h3>(todo: it's also edit page) Add new recipe</h3>
+      <h1>{recipeId ? 'Edit recipe' : 'Add new recipe'}</h1>
       <div>
         <RecipeForm recipeId={recipeId} />
       </div>

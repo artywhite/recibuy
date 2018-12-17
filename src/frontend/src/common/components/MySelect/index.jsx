@@ -10,6 +10,8 @@ function MySelect(props) {
 export function MyCreatableSelect(props) {
   return (
     <CreatableSelect
+      getOptionLabel={option => option.name || option.label}
+      getOptionValue={option => option.id || option.value}
       {...props}
       /**
        * TODO: workaround for crashing

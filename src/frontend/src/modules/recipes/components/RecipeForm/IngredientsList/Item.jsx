@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import get from 'lodash/get';
+import includes from 'lodash/includes';
 
 import { MyCreatableSelect } from 'common/components/MySelect';
 
@@ -27,14 +28,33 @@ class IngredientItem extends React.Component {
   };
 
   getUnitData = () => {
-    const { unitsIdsMap, itemData } = this.props;
-    const { ingredientData } = itemData;
+    const { unitsMap, itemData } = this.props;
+    const { ingredientData, unit } = itemData;
 
-    if (!ingredientData || !ingredientData.unitId) {
-      return null;
+    // if (!ingredientData || !ingredientData.unitId) {
+    //   return null;
+    // }
+
+    // return unitsMap[ingredientData.unitId];
+    return unit;
+  };
+
+  /**
+   * Returns available units options that are in ingredient.
+   *
+   * @return {Object[]}
+   */
+  getAvailableUnitOptions = () => {
+    const { unitsOptions, itemData } = this.props;
+    const isIngredientNew = get(itemData, 'ingredientData.__isNew__');
+
+    if (isIngredientNew) {
+      return unitsOptions;
     }
+    
+    const unitsIds = get(itemData, 'ingredientData.unitsIds', []);
 
-    return unitsIdsMap[ingredientData.unitId];
+    return unitsOptions.filter(unitOption => includes(unitsIds, unitOption.id));
   };
 
   render() {
@@ -46,6 +66,7 @@ class IngredientItem extends React.Component {
     const isIngredientSelected = Boolean(ingredientId);
     const unit = this.getUnitData();
     const isNew = get(ingredientData, '__isNew__', false);
+    const availableUnitOptions = this.getAvailableUnitOptions();
 
     return (
       <div className="ingredient-item">
@@ -75,18 +96,14 @@ class IngredientItem extends React.Component {
                 onChange={this.onAmountChange}
               />
               <span>
-                {isNew ? (
-                  <div className="iicn-unit-select">
-                    <MyCreatableSelect
-                      placeholder="Select unit"
-                      value={unitData}
-                      options={unitsOptions}
-                      onChange={this.onSelectNewIngredientUnit}
-                    />
-                  </div>
-                ) : (
-                  get(unit, 'name', '')
-                )}
+                <div className="iicn-unit-select">
+                  <MyCreatableSelect
+                    placeholder="Select unit"
+                    value={unit}
+                    options={availableUnitOptions}
+                    onChange={this.onSelectNewIngredientUnit}
+                  />
+                </div>
               </span>
             </div>
           </React.Fragment>

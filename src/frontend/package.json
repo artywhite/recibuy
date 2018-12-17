@@ -5,15 +5,17 @@
   "dependencies": {
     "connected-react-router": "^5.0.1",
     "history": "^4.7.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "lodash": "^4.17.11",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
     "react-redux": "^5.1.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "NODE_PATH=src react-scripts start",
@@ -21,6 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3005",
   "eslintConfig": {
     "extends": "react-app"
   },

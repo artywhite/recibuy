@@ -1,15 +1,24 @@
+import get from 'lodash/get';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
-import { unitsIdsMap, ingredientsIdsMap } from 'modules/recipes/selectors';
+import { getIngredientsMap } from 'modules/ingredients/selectors';
+import { getUnitsMap } from 'modules/units/selectors';
 import { ROUTES } from 'common/constants/routes';
 
 import './index.scss';
 
+const propTypes = {
+  recipes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  ingredientsMap: PropTypes.shape({}).isRequired,
+  unitsMap: PropTypes.shape({}).isRequired,
+};
+
 function RecipesList(props) {
-  const { recipes } = props;
+  const { recipes, ingredientsMap, unitsMap } = props;
   const isEmptyList = recipes.length === 0;
   return (
     <div className="recipes-list-wrapper">
@@ -24,8 +33,8 @@ function RecipesList(props) {
             <ul className="rlw-ingredients-wrapper">
               {recipe.ingredients.map((ingredient) => {
                 const { amount, ingredientId, unitId } = ingredient;
-                const name = ingredientsIdsMap[ingredientId].name;
-                const unitName = unitsIdsMap[unitId].name;
+                const name = get(ingredientsMap, `${ingredientId}.name`);
+                const unitName = get(unitsMap, `${unitId}.name`);
                 return (
                   <li key={ingredientId} className="rlwiw-item">
                     <span className="rlwiwi-name">{name}</span>
@@ -48,8 +57,12 @@ function RecipesList(props) {
   );
 }
 
+RecipesList.propTypes = propTypes;
+
 const mapStateToProps = state => ({
   recipes: state.recipes.recipes,
+  ingredientsMap: getIngredientsMap(state),
+  unitsMap: getUnitsMap(state),
 });
 
 // const mapDispatchToProps = dispatch => bindActionCreators(
