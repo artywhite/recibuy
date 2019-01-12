@@ -9,7 +9,6 @@ const ingredientRouter = express.Router();
 
 ingredientRouter.get('/', async (req, res) => {
   const { ids } = req.query;
-  console.warn('ingredientRouter.get', ids);
   let ingredients;
 
   if (ids) {

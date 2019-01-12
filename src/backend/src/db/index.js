@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { DB_CONNECT_PATH } = require('src/config');
-const { infoLogger } = require('src/helpers/Logger');
+const { infoLogger, errorLogger } = require('src/helpers/Logger');
 
 function connectDB(dbPath = DB_CONNECT_PATH) {
   return new Promise((resolve, reject) => {
@@ -10,8 +10,9 @@ function connectDB(dbPath = DB_CONNECT_PATH) {
       { useNewUrlParser: true }
     );
     const db = mongoose.connection;
-    db.on('error', () => {
-      reject(new Error(`DB connection error: ${dbPath}`));
+    db.on('error', error => {
+      errorLogger('`DB connection error');
+      reject(error);
     });
     db.once('open', function() {
       infoLogger(`Connection to '${dbPath}' successfully opened`);

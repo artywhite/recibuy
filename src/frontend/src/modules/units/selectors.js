@@ -20,11 +20,6 @@ export const getMissedUnitsFromRecipes = (state, recipes) => {
 
   const missedIds = difference(recipesUnits, storeUnits);
 
-  console.warn('getMissedUnitsFromRecipes', {
-    storeUnits,
-    recipesUnits,
-    missedIds,
-  });
 
   return missedIds;
 };

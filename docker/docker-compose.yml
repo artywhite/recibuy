@@ -9,27 +9,11 @@ services:
     volumes:
       - '../src/backend/:/usr/src/app/'
     links:
-      - database # link this service to the database service
+      - recibuy-database # link this service to the database service
     ports:
       - 3005:3005
 
-  # recibuy-frontend: #name of the second service
-  #   build:
-  #     context: ../
-  #     dockerfile: ./docker/RecibuyFrontend
-  #   links:
-  #     - recibuy-backend
-  #   ports:
-  #     - 3000:3000
-
-  database: # name of the third service
+  recibuy-database: # name of the third service
     image: mongo # specify image to build container from
-
-  # nginx:
-  #   build:
-  #     context: ../
-  #     dockerfile: ./docker/NginxProxy
-  #   ports:
-  #     - 62122:62122
-  #   links:
-  #     - recibuy-frontend
+    volumes:
+      - '../db_data:/data/db'

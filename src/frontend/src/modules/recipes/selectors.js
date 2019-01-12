@@ -1,5 +1,3 @@
-import get from 'lodash/get';
-
 import { convertListToMap } from 'common/helpers/utils';
 
 export const getConvertedToApiRecipeData = recipeData => ({

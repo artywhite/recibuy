@@ -23,11 +23,5 @@ export const getMissedIngredientsFromRecipes = (state, recipes) => {
 
   const missedIds = difference(recipesIngredients, storeIngredients);
 
-  console.warn('getMissedIngredientsFromRecipes', {
-    storeIngredients,
-    recipesIngredients,
-    missedIds,
-  });
-
   return missedIds;
 };

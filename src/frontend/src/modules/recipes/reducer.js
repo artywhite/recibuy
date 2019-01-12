@@ -5,37 +5,6 @@ import {
   FETCH_RECIPES_SUCCESS,
 } from './actions';
 
-const tempRecipe = {
-  id: 'newRecipe42',
-  name: 'My new recipe',
-  ingredients: [
-    {
-      ingredientId: 1,
-      amount: 123,
-      categoryId: 1,
-      unitId: 1,
-      newUnitName: '',
-      newIngredientName: '',
-    },
-    {
-      ingredientId: 3,
-      amount: 44,
-      categoryId: 3,
-      unitId: 3,
-      newUnitName: '',
-      newIngredientName: '',
-    },
-    {
-      ingredientId: 2,
-      amount: 444,
-      categoryId: 2,
-      unitId: 2,
-      newUnitName: '',
-      newIngredientName: '',
-    },
-  ],
-};
-
 const defaultState = {
   recipes: [],
   isInLoading: false,

@@ -9,7 +9,6 @@ const unitRouter = express.Router();
 
 unitRouter.get('/', async (req, res) => {
   const { ids } = req.query;
-  console.warn('units.get', ids);
   let units;
 
   if (ids) {

@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE, push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import qs from 'qs';
 
 import { ROUTES } from 'common/constants/routes';
@@ -21,12 +21,6 @@ const middleware = store => next => (action) => {
   const { dispatch, getState } = store;
 
   switch (action.type) {
-    case LOCATION_CHANGE: {
-      console.warn('Location change from middleware', action);
-
-      break;
-    }
-
     case UPDATE_RECIPE_SUCCESS:
     case ADD_RECIPE_SUCCESS: {
       dispatch(push(ROUTES.RECIPES));
@@ -48,8 +42,6 @@ const middleware = store => next => (action) => {
       if (missedUnitsIds.length) {
         dispatch(fetchUnitsByIds(missedUnitsIds));
       }
-
-      console.warn('FETCH_RECIPES_SUCCESS', { recipes, state, missedIngredientsIds });
 
       break;
     }

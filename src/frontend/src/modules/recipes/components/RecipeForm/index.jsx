@@ -48,8 +48,6 @@ class RecipeForm extends React.Component {
     const { id, name, recipeIngredients } = this.state;
     const newRecipeData = { id, name, recipeIngredients };
     const convertedData = getConvertedToApiRecipeData(newRecipeData);
-    console.warn('state', this.state);
-    console.warn('converteData', convertedData);
 
     if (id) {
       this.props.boundActions.updateRecipe(convertedData);

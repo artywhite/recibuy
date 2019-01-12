@@ -14,7 +14,6 @@ function preProcessIngredients(ingredients) {
     if (newUnitName) {
       const newUnit = await UnitModel.createOrGetExisted({ name: newUnitName });
       unitId = newUnit._id; // TODO: use just `id`
-      console.warn('newUnit', newUnit);
     }
 
     // Ingredient is new
@@ -23,8 +22,6 @@ function preProcessIngredients(ingredients) {
         name: newIngredientName,
         unitsIds: [unitId],
       });
-
-      console.warn(`newIngredient`, newIngredient);
 
       return {
         amount: ingredient.amount,
@@ -35,7 +32,6 @@ function preProcessIngredients(ingredients) {
 
     // If ingredient is already existed
     const existIngredient = await IngredientModel.findById(ingredientId);
-    console.warn('existIngredient found', existIngredient);
     if (newUnitName) {
       existIngredient.unitsIds.push(unitId);
       await existIngredient.save();
@@ -70,8 +66,6 @@ recipeRouter.post(
       name,
       ingredients: preProcessedIngredients,
     };
-
-    console.warn('draftRecipeData', draftRecipeData);
 
     const newRecipe = await RecipeModel.create(draftRecipeData);
 

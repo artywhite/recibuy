@@ -52,7 +52,6 @@ const recipeSchema = new mongoose.Schema(
     changedAt: { type: Date, default: Date.now },
 
     name: String,
-    amount: Number,
 
     ingredients: [RecipeIngredientSchema],
   },

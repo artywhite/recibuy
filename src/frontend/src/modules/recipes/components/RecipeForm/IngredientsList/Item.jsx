@@ -28,14 +28,9 @@ class IngredientItem extends React.Component {
   };
 
   getUnitData = () => {
-    const { unitsMap, itemData } = this.props;
-    const { ingredientData, unit } = itemData;
+    const { itemData } = this.props;
+    const { unit } = itemData;
 
-    // if (!ingredientData || !ingredientData.unitId) {
-    //   return null;
-    // }
-
-    // return unitsMap[ingredientData.unitId];
     return unit;
   };
 
@@ -51,17 +46,15 @@ class IngredientItem extends React.Component {
     if (isIngredientNew) {
       return unitsOptions;
     }
-    
+
     const unitsIds = get(itemData, 'ingredientData.unitsIds', []);
 
     return unitsOptions.filter(unitOption => includes(unitsIds, unitOption.id));
   };
 
   render() {
-    const {
-      itemData, availableIngredientsList, unitsOptions, isLast,
-    } = this.props;
-    const { amount, ingredientData, unitData } = itemData;
+    const { itemData, availableIngredientsList, isLast } = this.props;
+    const { amount, ingredientData } = itemData;
     const ingredientId = get(ingredientData, 'id');
     const isIngredientSelected = Boolean(ingredientId);
     const unit = this.getUnitData();

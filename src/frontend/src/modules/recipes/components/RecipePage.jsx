@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import RecipeForm from 'modules/recipes/components/RecipeForm';
 
 function RecipePage(props) {
-  console.warn('recipePage render', props);
   const {
     match: {
       params: { recipeId = '' },
