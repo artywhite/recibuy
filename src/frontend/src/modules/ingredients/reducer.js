@@ -1,5 +1,5 @@
 import uniqby from 'lodash/uniqBy';
-import { FETCH_INGREDIENTS_SUCCESS, ADD_INGREDIENTS } from './actions';
+import { FETCH_INGREDIENTS_SUCCESS, ADD_INGREDIENTS, UPDATE_INGREDIENTS } from './actions';
 
 const defaultState = {
   ingredients: [],
@@ -13,6 +13,9 @@ const ingredientsReducer = (state = defaultState, action) => {
 
     case ADD_INGREDIENTS:
       return { ...state, ingredients: uniqby([...action.data.ingredients, ...state.ingredients]) };
+
+    case UPDATE_INGREDIENTS:
+      return { ...state, ingredients: [...action.data.ingredients] };
 
     default:
       return state;

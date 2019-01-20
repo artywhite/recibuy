@@ -3,7 +3,8 @@
     "baseUrl": "src",
     "target": "es2018",
     "paths": {
-      "common/*": [".common/*"]
+      "common/*": [".common/*"],
+      "modules/*": ["./src/modules/*/**"]
     }
   },
   "exclude": ["node_modules", "**/node_modules/*"]

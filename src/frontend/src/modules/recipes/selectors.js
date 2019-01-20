@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { convertListToMap } from 'common/helpers/utils';
 
 export const getConvertedToApiRecipeData = recipeData => ({
@@ -37,4 +39,8 @@ export const getConvertedFromApiRecipeData = (recipeData, ingredients, unitsMap)
 });
 
 const getRecipes = state => state.recipes.recipes;
-export const getRecipesIdsMap = state => convertListToMap(getRecipes(state));
+
+export const getRecipesIdsMap = createSelector(
+  [getRecipes],
+  convertListToMap,
+);

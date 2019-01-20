@@ -2,8 +2,19 @@
 
 ## TODO MVP:
 
+- amount - чашка и Чашка --- все юниты писать с маленькой буквы
+- кейс: создание нового рецепта + создание новых юнитов в нем с одинаковым названием --- не создавать два разных юнита
+- удаление/исправление ингредиентов из shopping list - типа есть в наличии, покупать не надо
+- добавить картинку (квадрат) на страницу рецептов
+- верстка
+  - список рецептов в виде тумб https://cl.ly/75dfe7757002/Image%202019-01-20%20at%2020.26.31.png
+- ask Ana: why there is such relation as unit -> ingredient, why on selecting ingredient's units there is no way to select among all units, not only among those which is related.
+
+- amount можно поменять, если вести с клавы что-то, а не выбором
+- validation
+- frontend: keep basket + shopping list in LocalStorage
 - backend: duplicate units when creating new ingredient with same new units
-- keep mongo db on recreating container
+- fix first backend's load - DB connection error => use solution in some other project (wait-for-it.sh)
 
 ## TODO After MVP:
 

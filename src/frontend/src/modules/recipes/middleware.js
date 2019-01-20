@@ -4,7 +4,7 @@ import qs from 'qs';
 import { ROUTES } from 'common/constants/routes';
 
 import { getMissedIngredientsFromRecipes } from 'modules/ingredients/selectors';
-import { fetchIngredientsByIds } from 'modules/ingredients/actions';
+import { fetchIngredientsByIds, addMissingIngredientUnits } from 'modules/ingredients/actions';
 
 import { getMissedUnitsFromRecipes } from 'modules/units/selectors';
 import { fetchUnitsByIds } from 'modules/units/actions';
@@ -23,6 +23,9 @@ const middleware = store => next => (action) => {
   switch (action.type) {
     case UPDATE_RECIPE_SUCCESS:
     case ADD_RECIPE_SUCCESS: {
+      const { data: { recipe } } = action;
+      dispatch(addMissingIngredientUnits(recipe.ingredients));
+
       dispatch(push(ROUTES.RECIPES));
       push();
 
