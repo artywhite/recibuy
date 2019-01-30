@@ -16,7 +16,7 @@ import { getUnits, getUnitsMap } from 'modules/units/selectors';
 
 import { addRecipe, updateRecipe } from 'modules/recipes/actions';
 
-import IngredientList from './IngredientsList';
+import IngredientList from 'modules/recipes/components/IngredientsList';
 
 class RecipeForm extends React.Component {
   static propTypes = {

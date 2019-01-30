@@ -41,15 +41,7 @@ class IngredientItem extends React.Component {
    */
   getAvailableUnitOptions = () => {
     const { unitsOptions, itemData } = this.props;
-    const isIngredientNew = get(itemData, 'ingredientData.__isNew__');
-
-    if (isIngredientNew) {
-      return unitsOptions;
-    }
-
-    const unitsIds = get(itemData, 'ingredientData.unitsIds', []);
-
-    return unitsOptions.filter(unitOption => includes(unitsIds, unitOption.id));
+    return unitsOptions;
   };
 
   render() {

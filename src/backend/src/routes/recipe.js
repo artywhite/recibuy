@@ -1,4 +1,5 @@
 const express = require('express');
+const Promise = require('bluebird');
 
 const { wrap } = require('src/middleware');
 
@@ -6,39 +7,45 @@ const { RecipeModel, IngredientModel, UnitModel } = require('src/db/models');
 
 const recipeRouter = express.Router();
 
-function preProcessIngredients(ingredients) {
-  return ingredients.map(async ingredient => {
-    const { newIngredientName, newUnitName, isNew, ingredientId } = ingredient;
+// TODO: move to controller
+async function getPreprocessedIngredient(ingredient) {
+  const { newIngredientName, newUnitName, isNew, ingredientId } = ingredient;
 
-    let unitId = ingredient.unitId;
-    if (newUnitName) {
-      const newUnit = await UnitModel.createOrGetExisted({ name: newUnitName });
-      unitId = newUnit._id; // TODO: use just `id`
-    }
+  let unitId = ingredient.unitId;
+  if (newUnitName) {
+    const normalizedUnitName = newUnitName.toLowerCase();
+    const newUnit = await UnitModel.createOrGetExisted({
+      name: normalizedUnitName,
+    });
+    unitId = newUnit._id; // TODO: use just `id`
+  }
 
-    // Ingredient is new
-    if (isNew) {
-      const newIngredient = await IngredientModel.create({
-        name: newIngredientName,
-        unitsIds: [unitId],
-      });
+  // Ingredient is new
+  if (isNew) {
+    const newIngredient = await IngredientModel.create({
+      name: newIngredientName,
+      unitsIds: [unitId],
+    });
 
-      return {
-        amount: ingredient.amount,
-        unitId,
-        ingredientId: newIngredient._id, // TODO: use just `id`
-      };
-    }
+    return {
+      amount: ingredient.amount,
+      unitId,
+      ingredientId: newIngredient._id, // TODO: use just `id`
+    };
+  }
 
-    // If ingredient is already existed
-    const existIngredient = await IngredientModel.findById(ingredientId);
-    if (newUnitName) {
-      existIngredient.unitsIds.push(unitId);
-      await existIngredient.save();
-    }
+  // If ingredient is already existed
+  const existIngredient = await IngredientModel.findById(ingredientId);
+  if (newUnitName) {
+    existIngredient.unitsIds.push(unitId);
+    await existIngredient.save();
+  }
 
-    return { ...ingredient, unitId };
-  });
+  return { ...ingredient, unitId };
+}
+
+async function preProcessIngredients(ingredients) {
+  return Promise.mapSeries(ingredients, getPreprocessedIngredient);
 }
 
 recipeRouter.get('/', async (req, res) => {
@@ -56,9 +63,7 @@ recipeRouter.post(
       throw new Error(`Not all fields specified`);
     }
 
-    const preProcessedIngredients = await Promise.all(
-      preProcessIngredients(ingredients)
-    );
+    const preProcessedIngredients = await preProcessIngredients(ingredients);
 
     // TODO: validation: unitId, ingredientId
 
@@ -83,9 +88,7 @@ recipeRouter.put(
       throw new Error(`Not all fields specified`);
     }
 
-    const preProcessedIngredients = await Promise.all(
-      preProcessIngredients(ingredients)
-    );
+    const preProcessedIngredients = await preProcessIngredients(ingredients);
 
     const draftRecipeData = {
       name,
