@@ -1,0 +1,19 @@
+version: '3' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  recibuy-backend:
+    build:
+      context: ../
+      dockerfile: ./docker/RecibuyBackend
+    volumes:
+      - '../src/backend/:/usr/src/app/'
+    links:
+      - recibuy-database # link this service to the database service
+    ports:
+      - 3005:3005
+
+  recibuy-database: # name of the third service
+    image: mongo # specify image to build container from
+    volumes:
+      - '../db_data:/data/db'

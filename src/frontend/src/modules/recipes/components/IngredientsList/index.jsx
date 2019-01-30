@@ -1,0 +1,83 @@
+import React from 'react';
+import get from 'lodash/get';
+import compact from 'lodash/compact';
+import includes from 'lodash/includes';
+
+import IngredientItem from './Item';
+
+import './index.scss';
+
+class IngredientsList extends React.Component {
+  getAvailableIngredients = () => {
+    const { recipeIngredients, ingredients } = this.props;
+    const usedIds = compact(
+      recipeIngredients.map(item => get(item, 'ingredientData.ingredientId')),
+    );
+    return ingredients.filter(item => !includes(usedIds, item.ingredientId));
+  };
+
+  updateListItem = (itemId, itemData) => {
+    const nextIngredientsList = this.props.recipeIngredients.map((item) => {
+      if (itemId !== item.ingredientId) {
+        return item;
+      }
+
+      return { ...item, ...itemData };
+    });
+
+    this.props.onChange(nextIngredientsList);
+  };
+
+  onIngredientSelected = (itemId, updatedItemData) => {
+    this.updateListItem(itemId, { ingredientData: updatedItemData });
+  };
+
+  onAmountChange = (itemId, value) => {
+    this.updateListItem(itemId, { amount: value });
+  };
+
+  onChangeUnit = (itemId, newUnitData) => {
+    this.updateListItem(itemId, { unit: newUnitData });
+  };
+
+  onRemoveItem = (itemId) => {
+    const nextIngredientsList = this.props.recipeIngredients.filter(
+      item => itemId !== item.ingredientId,
+    );
+
+    this.props.onChange(nextIngredientsList);
+  };
+
+  render() {
+    const { recipeIngredients, units, unitsMap } = this.props;
+    const options = this.getAvailableIngredients();
+
+    return (
+      <div className="ingredients-list-wrapper">
+        <div className="ingredients-list">
+          {recipeIngredients.map((item, index) => (
+            <IngredientItem
+              key={item.ingredientId}
+              itemData={item}
+              availableIngredientsList={options}
+              onIngredientSelected={this.onIngredientSelected}
+              onRemoveItem={this.onRemoveItem}
+              onChangeUnit={this.onChangeUnit}
+              onAmountChange={this.onAmountChange}
+              unitsMap={unitsMap}
+              unitsOptions={units}
+              isLast={index === recipeIngredients.length - 1}
+            />
+          ))}
+        </div>
+        <div>
+          <button type="button" onClick={this.props.addIngredient}>
+            Add ingredient
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default IngredientsList;
