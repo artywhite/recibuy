@@ -1,0 +1,10 @@
+.editable-input-wrapper {
+  .ei-init-mode input {
+    border-color: transparent;
+  }
+
+  input {
+    width: 30px;
+    outline: none;
+  }
+}

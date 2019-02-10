@@ -7,7 +7,7 @@ import { getIngredientsMap } from 'modules/ingredients/selectors';
 import { getUnitsMap } from 'modules/units/selectors';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getShoppingList = createSelector(
+export const getComputedShoppingList = createSelector(
   [getBasketRecipes, getIngredientsMap, getUnitsMap],
   (basketRecipes, ingredientsMap, unitsMap) => {
     const ingredientsUnitsMap = basketRecipes.reduce((result, recipe) => {

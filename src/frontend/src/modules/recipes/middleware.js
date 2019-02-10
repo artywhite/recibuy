@@ -1,5 +1,4 @@
 import { push } from 'connected-react-router';
-import qs from 'qs';
 
 import { ROUTES } from 'common/constants/routes';
 
@@ -11,10 +10,9 @@ import { fetchUnitsByIds } from 'modules/units/actions';
 
 import { ADD_RECIPE_SUCCESS, UPDATE_RECIPE_SUCCESS, FETCH_RECIPES_SUCCESS } from './actions';
 
-window.qs = qs;
 
 /**
- * Analytics middleware function
+ * Recipes middleware function
  */
 const middleware = store => next => (action) => {
   const result = next(action);

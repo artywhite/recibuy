@@ -3,7 +3,8 @@ import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 
 import Api from 'common/helpers/Api';
-import recipeMiddleware from 'modules/recipes/middleware.js';
+import recipeMiddleware from 'modules/recipes/middleware';
+import shoppingMiddleware from 'modules/shopping/middleware';
 
 import createRootReducer from './rootReducer';
 
@@ -11,7 +12,12 @@ import createRootReducer from './rootReducer';
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function (history) {
-  const middlewares = [thunk.withExtraArgument({ Api }), routerMiddleware(history), recipeMiddleware];
+  const middlewares = [
+    thunk.withExtraArgument({ Api }),
+    routerMiddleware(history),
+    recipeMiddleware,
+    shoppingMiddleware,
+  ];
 
   return createStore(createRootReducer(history), composeEnhancer(applyMiddleware(...middlewares)));
 }

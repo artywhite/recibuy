@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getShoppingList } from 'modules/shopping/selectors';
+import EditableInput from 'common/components/EditableInput';
+
+import { removeShoppingListItem, updateShoppingListItem } from 'modules/shopping/actions';
+
+import './index.scss';
 
 const propTypes = {
   shoppingList: PropTypes.arrayOf(
@@ -17,23 +21,32 @@ const propTypes = {
 };
 
 function ShoppingList(props) {
-  const { shoppingList } = props;
+  const { boundActions, shoppingList } = props;
   const isEmpty = shoppingList.length === 0;
 
   return (
-    <div>
+    <div className="shopping-list-wrapper">
       {isEmpty ? <div>Shopping list is empty</div> : null}
       <ol>
         {shoppingList.map(item => (
           <li key={item.id}>
             <strong>{item.ingredientName}</strong>
             <span>:</span>
-            <span className="mlr">
-              <i>{item.amount}</i>
+            <span className="ml mr">
+              <EditableInput
+                value={item.amount}
+                onChange={newAmount => boundActions.updateShoppingListItem(item.id, Number(newAmount))
+                }
+              />
             </span>
             <span>(</span>
             <span>{item.unitName}</span>
             <span>)</span>
+            <span className="ml">
+              <button type="button" onClick={() => boundActions.removeShoppingListItem(item.id)}>
+                x
+              </button>
+            </span>
           </li>
         ))}
       </ol>
@@ -43,10 +56,13 @@ function ShoppingList(props) {
 
 ShoppingList.propTypes = propTypes;
 
-const reduxActions = {};
+const reduxActions = {
+  removeShoppingListItem,
+  updateShoppingListItem,
+};
 
 const mapStateToProps = state => ({
-  shoppingList: getShoppingList(state),
+  shoppingList: state.shopping.shoppingList,
 });
 
 const mapDispatchToProps = dispatch => ({

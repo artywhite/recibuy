@@ -5,6 +5,7 @@ import recipesReducer from 'modules/recipes/reducer';
 import ingredientsReducer from 'modules/ingredients/reducer';
 import unitsReducer from 'modules/units/reducer';
 import basketReducer from 'modules/basket/reducer';
+import shoppingReducer from 'modules/shopping/reducer';
 
 export default history => combineReducers({
   router: connectRouter(history),
@@ -13,4 +14,5 @@ export default history => combineReducers({
   ingredients: ingredientsReducer,
   units: unitsReducer,
   basket: basketReducer,
+  shopping: shoppingReducer,
 });

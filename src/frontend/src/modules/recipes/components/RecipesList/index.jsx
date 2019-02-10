@@ -63,7 +63,7 @@ function RecipesList(props) {
                   return (
                     <li key={ingredientId} className="rlwiw-item">
                       <span className="rlwiwi-name">{name}</span>
-                      <span className="mlr">-</span>
+                      <span className="ml mr">-</span>
                       <span className="rlwiwi-amount mr">{amount}</span>
                       <span className="rlwiwi-unit text-muted">{unitName}</span>
                     </li>

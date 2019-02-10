@@ -1,7 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
 import get from 'lodash/get';
-import includes from 'lodash/includes';
 
 import { MyCreatableSelect } from 'common/components/MySelect';
 
